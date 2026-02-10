@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>شطرنج - Black Purple Red Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- شريط العنوان العلوي -->
+        <div class="top-bar">
+            <div class="title">
+                <i class="fas fa-chess-king"></i>
+                <h1>Black Purple Red</h1>
+            </div>
+            <div class="game-mode">
+                <i class="fas fa-robot"></i>
+                <span>ضد الكمبيوتر</span>
+            </div>
+        </div>
+
+        <!-- منطقة اللعبة الرئيسية -->
+        <div class="game-wrapper">
+            <!-- معلومات اللعبة -->
+            <div class="mobile-game-info">
+                <div class="status-card">
+                    <div class="status-item">
+                        <span class="label">الصعوبة:</span>
+                        <select id="difficulty" class="mobile-select">
+                            <option value="easy">سهل</option>
+                            <option value="medium" selected>متوسط ✓</option>
+                            <option value="hard">صعب</option>
+                        </select>
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="label">الدور:</span>
+                        <span id="current-turn" class="value player-white">الأبيض</span>
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="label">الحركة:</span>
+                        <span id="move-count" class="value">1</span>
+                    </div>
+                </div>
+
+                <!-- المؤقتات -->
+                <div class="mobile-timers">
+                    <div class="mobile-timer white">
+                        <div class="timer-label">
+                            <i class="fas fa-chess-pawn white-icon"></i>
+                            <span>الأبيض</span>
+                        </div>
+                        <div class="time-display" id="white-time">10:00</div>
+                    </div>
+                    
+                    <div class="mobile-timer black">
+                        <div class="timer-label">
+                            <i class="fas fa-chess-pawn black-icon"></i>
+                            <span>الأسود</span>
+                        </div>
+                        <div class="time-display" id="black-time">10:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- لوحة الشطرنج -->
+            <div class="board-container">
+                <div id="chess-board"></div>
+                <div class="mobile-board-status" id="board-status">
+                    <i class="fas fa-chess-board"></i>
+                    <span>حرك قطعة بيضاء</span>
+                </div>
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="mobile-controls">
+                <button id="pause-btn" class="mobile-btn">
+                    <i class="fas fa-pause"></i>
+                    <span>إيقاف</span>
+                </button>
+                
+                <button id="reset-btn" class="mobile-btn reset">
+                    <i class="fas fa-redo"></i>
+                    <span>إعادة</span>
+                </button>
+                
+                <button id="help-btn" class="mobile-btn help">
+                    <i class="fas fa-question-circle"></i>
+                    <span>مساعدة</span>
+                </button>
+                
+                <button id="hint-btn" class="mobile-btn hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>تلميح</span>
+                </button>
+            </div>
+
+            <!-- القطع المأخوذة -->
+            <div class="mobile-captured">
+                <div class="captured-section">
+                    <div class="captured-header">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <h3>قطع الأسود المأخوذة</h3>
+                    </div>
+                    <div id="white-captured" class="captured-list">
+                        <!-- القطع التي أخذها الأبيض -->
+                    </div>
+                </div>
+                
+                <div class="captured-section">
+                    <div class="captured-header">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <h3>قطع الأبيض المأخوذة</h3>
+                    </div>
+                    <div id="black-captured" class="captured-list">
+                        <!-- القطع التي أخذها الأسود -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- دليل القطع -->
+        <div class="pieces-guide">
+            <h3><i class="fas fa-chess"></i> دليل قطع الشطرنج:</h3>
+            <div class="pieces-list">
+                <div class="piece-guide">
+                    <span class="piece-icon king">♔</span>
+                    <span class="piece-name">الملك</span>
+                </div>
+                <div class="piece-guide">
+                    <span class="piece-icon queen">♕</span>
+                    <span class="piece-name">الوزير</span>
+                </div>
+                <div class="piece-guide">
+                    <span class="piece-icon rook">♖</span>
+                    <span class="piece-name">الطابية</span>
+                </div>
+                <div class="piece-guide">
+                    <span class="piece-icon bishop">♗</span>
+                    <span class="piece-name">الفيل</span>
+                </div>
+                <div class="piece-guide">
+                    <span class="piece-icon knight">♘</span>
+                    <span class="piece-name">الحصان</span>
+                </div>
+                <div class="piece-guide">
+                    <span class="piece-icon pawn">♙</span>
+                    <span class="piece-name">البيدق</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة التعليمات -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-graduation-cap"></i> قواعد الشطرنج</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rule">
+                    <h3><i class="fas fa-chess-king"></i> الملك:</h3>
+                    <p>يتحرك مربع واحد في جميع الاتجاهات.</p>
+                </div>
+                <div class="rule">
+                    <h3><i class="fas fa-chess-queen"></i> الوزير:</h3>
+                    <p>يتحرك أي عدد من المربعات في جميع الاتجاهات.</p>
+                </div>
+                <div class="rule">
+                    <h3><i class="fas fa-chess-rook"></i> الطابية:</h3>
+                    <p>يتحرك أي عدد من المربعات أفقياً أو عمودياً.</p>
+                </div>
+                <div class="rule">
+                    <h3><i class="fas fa-chess-bishop"></i> الفيل:</h3>
+                    <p>يتحرك أي عدد من المربعات قطرياً.</p>
+                </div>
+                <div class="rule">
+                    <h3><i class="fas fa-chess-knight"></i> الحصان:</h3>
+                    <p>يتحرك على شكل حرف L: مربعين ثم مربع جانبياً.</p>
+                </div>
+                <div class="rule">
+                    <h3><i class="fas fa-chess-pawn"></i> البيدق:</h3>
+                    <p>يتحرك للأمام مربع واحد، ويمكنه التحرك مربعين في أول حركة. يأخذ قطعة الخصم قطرياً.</p>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>نصيحة:</strong> انقر على قطعة لرؤية حركاتها الممكنة باللون الأزرق.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
